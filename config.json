@@ -1,0 +1,12 @@
+{
+    "wechat_accounts": {
+        "一颗半牛油果": {
+            "app_id": "wx8db6ccecdbc84f98",
+            "app_secret": "43342c608c10fea6dd375f7b757f51ac"
+        },
+        "懒人必备资源": {
+            "app_id": "wx8b7bd76b8d4a2e99",
+            "app_secret": "bdc140011d24e8ccc9a49a6d71d2da95"
+        }
+    }
+}

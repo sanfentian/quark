@@ -1,33 +1,37 @@
-import sqlite3
-
-import sqlite3
-
-
-def fetch_files(file_name) -> bool:
-    """检索文件,如果已存在那么返回False"""
-    conn = sqlite3.connect('file.db')
-    c = conn.cursor()
-    c.execute('SELECT FILE_NAME FROM ALL_FILE WHERE FILE_NAME =?', (file_name,))
-    files = c.fetchall()
-    conn.close()
-    if files:
-        return False
-    return True
+import psycopg2
+from psycopg2 import sql
 
 
-def insert_files(file_id, file_name, file_type, share_link):
-    """插入文件"""
-    conn = sqlite3.connect('file.db')
-    c = conn.cursor()
-    c.execute("INSERT INTO ALL_FILE VALUES (?,?,?,?)", (file_id, file_name, file_type, share_link))
-    conn.commit()
-    conn.close()
+class PGDatabase:
+    def __init__(self):
+        self.conn = psycopg2.connect(
+            dbname="postgres",
+            user="postgres",
+            password="Xiyou_00",
+            host="47.93.241.40"
+        )
 
+    def fetch_files(self, file_name) -> bool:
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                SELECT file_name FROM all_file 
+                WHERE file_name = %s
+            """, (file_name,))
+            return not bool(cur.fetchone())
 
-def update_files(file_id, file_name):
-    conn = sqlite3.connect('file.db')
-    c = conn.cursor()
-    c.execute("UPDATE ALL_FILE SET FILE_ID=? WHERE FILE_NAME=?", (file_id, file_name))
-    conn.commit()
-    conn.close()
+    def insert_files(self, file_id, file_name, file_type, share_link):
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO all_file 
+                VALUES (%s, %s, %s, %s)
+            """, (file_id, file_name, file_type, share_link))
+            self.conn.commit()
 
+    def update_files(self, file_id, file_name):
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                UPDATE all_file 
+                SET file_id = %s 
+                WHERE file_name = %s
+            """, (file_id, file_name))
+            self.conn.commit()

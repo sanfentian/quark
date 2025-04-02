@@ -1,0 +1,39 @@
+requests~=2.32.3
+psycopg2~=2.9.10
+# 数据库驱动
+psycopg2-binary>=2.9.5  # 开发环境推荐（无需编译）
+# 或生产环境使用（需要本地编译工具链）：
+# psycopg2>=2.9.5
+
+# ORM工具
+SQLAlchemy>=2.0.0
+
+# 环境管理
+python-dotenv>=0.21.0  # 加载.env文件
+
+# 调试工具
+ipdb>=0.13.9  # 调试器
+sqlalchemy2-stubs>=0.0.2a33  # 类型提示
+
+# 监控
+prometheus-client>=0.16.0  # 数据库监控指标
+
+# 测试框架
+pytest>=7.2.0
+pytest-asyncio>=0.20.0
+pytest-mock>=3.10.0
+
+fastapi>=0.95.0
+uvicorn>=0.21.0
+httpx>=0.24.0  # 异步HTTP客户端
+
+# 连接池增强
+SQLAlchemy-Utils>=0.41.0  # 提供额外数据类型
+psycopg2-pool>=1.1  # 独立连接池实现
+
+# 异步支持
+asyncpg>=0.27.0  # 替代psycopg2的异步驱动
+sqlalchemy[asyncio]>=2.0.0  # SQLAlchemy异步支持
+
+# 数据迁移
+alembic>=1.11.0  # 数据库迁移工具
