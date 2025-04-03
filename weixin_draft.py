@@ -24,8 +24,9 @@ if __name__ == '__main__':
     with open('config.json', 'r', encoding='utf-8') as f:
         config = json.load(f)
 
+    author = '懒人必备资源'
     # 初始化 WeChatAPI
-    account = config["wechat_accounts"]["一颗半牛油果"]
+    account = config["wechat_accounts"][author]
 
     app_id = account["app_id"]
     app_secret = account["app_secret"]
@@ -35,7 +36,9 @@ if __name__ == '__main__':
         db,
         page=1
     )
-
+    for resource in resources:
+        print(f"标题: {resource['title']}")
+        print(f"URL: {resource['share_link']}\n")  # \n 用于添加空行分隔不同资源
 
     urls = []
     try:
@@ -80,7 +83,7 @@ if __name__ == '__main__':
     print(f"摘要：\n{summary}")
 
     # 6. 创建草稿
-    media_id = wechat_api.create_draft("每天十个强大的资源", ''.join(summary)[:110], content_html, thumb_media_id)
+    media_id = wechat_api.create_draft("每天十个强大的资源", author,''.join(summary)[:110], content_html, thumb_media_id)
 
     print("media_id：", media_id)
     if not media_id:
